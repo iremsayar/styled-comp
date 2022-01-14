@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import routes from "./routes";
+import { Background, styledComponentTheme } from "./styledComponents";
+import { ThemeProvider } from 'styled-components';
+import { ChangeThemeContext } from './context/ChangeThemeContext'
+import { useContext } from "react";
 
 function App() {
+  const {themeName} = useContext(ChangeThemeContext)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={styledComponentTheme[themeName]}>
+<Background>
+    <div>
+      <Routes>
+        {
+          routes.map((item) =>
+            <Route path={item.path} element={item.element} />)
+        }
+        
+        </Routes>
+        </div>
+        
+        
+        </Background>
+      </ThemeProvider>
+
   );
 }
 
